@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link, Stack } from 'expo-router'
+import { Link, Stack, useRouter } from 'expo-router'
 
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation  }: any) {
+    const router = useRouter();
     return (
         <>
             <Stack.Screen />
@@ -31,9 +32,10 @@ export default function LoginScreen() {
                         </TouchableOpacity>
                         <ThemedText style={{ color: "#000", fontSize: 18, fontWeight: "800", textAlign: "center", marginTop: 10 }}>
                             Não tem uma conta?
-                            <Link href="/register">
+                            {/* <Link href="/register">
                                 <ThemedText style={{ color: "#2c2c2c" }}>Cadastre-se</ThemedText>
-                            </Link>
+                            </Link> */}
+                            <Button title='TEste' onPress={() => navigation.navigate("register")}/>
                         </ThemedText>
                     </ThemedView>
                 </ThemedView>

@@ -37,26 +37,26 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme} >
-      <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          {currentUser ? (
-            <AuthProvider>
-              <AuthInit>
-                <Stack.Screen name="home" component={HomeScreen} />
-                <Stack.Screen name="profile" component={Profile} />
-                <Stack.Screen name="search" component={SearchView} />
-              </AuthInit>
-            </AuthProvider>
-          ) : (
-            <>
-              <Stack.Screen name="login" component={LoginScreen} />
-              <Stack.Screen name="register" component={RegisterScreen} />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <NavigationContainer independent={true}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme} >
+        {currentUser ? (
+          <AuthProvider>
+            <AuthInit>
+              <Stack.Navigator>
+                <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }} />
+                <Stack.Screen name="search" component={SearchView} options={{ headerShown: false }} />
+              </Stack.Navigator>
+            </AuthInit>
+          </AuthProvider>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        )}
+      </ThemeProvider>
+    </NavigationContainer>
 
   );
 }
