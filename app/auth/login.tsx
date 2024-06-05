@@ -2,12 +2,11 @@ import React from 'react'
 import { Link, Stack } from 'expo-router'
 
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import { KeyboardAvoidingView, Platform } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 
-export default function login() {
+export default function LoginScreen() {
     return (
         <>
             <Stack.Screen />
