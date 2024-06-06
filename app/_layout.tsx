@@ -14,16 +14,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
-import TabLayout from "@/app/(tabs)/_layout"; // Importa o TabLayout
+import AuthenticatedLayout from "./(tabs)/authenticatedLayout";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
-export default function RootLayout() {
+function Layout() {
   const { currentUser } = useAuth();
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -39,20 +37,28 @@ export default function RootLayout() {
   }
 
   return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {currentUser ? (
+        <Stack.Screen name="tabs" component={AuthenticatedLayout} />
+      ) : (
+        <>
+          <Stack.Screen name="login" component={LoginScreen} />
+          <Stack.Screen name="register" component={RegisterScreen} />
+        </>
+      )}
+    </Stack.Navigator>
+  )
+}
+
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+
+  return (
     <NavigationContainer independent={true}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
           <AuthInit>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              {currentUser ? (
-                <Stack.Screen name="TabLayout" component={TabLayout} /> // Atualizado para TabLayout
-              ) : (
-                <>
-                  <Stack.Screen name="login" component={LoginScreen} />
-                  <Stack.Screen name="register" component={RegisterScreen} />
-                </>
-              )}
-            </Stack.Navigator>
+            <Layout />
           </AuthInit>
         </AuthProvider>
       </ThemeProvider>

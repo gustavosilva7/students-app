@@ -11,9 +11,9 @@ type Auth = {
 
 const initialValues: Auth = {
   token: "",
-  setAuthToken: () => {},
+  setAuthToken: () => { },
   currentUser: null,
-  setCurrentUser: () => {},
+  setCurrentUser: () => { },
 };
 
 const AuthContext = React.createContext<Auth>(initialValues);
@@ -66,8 +66,10 @@ const AuthInit: React.FC<React.PropsWithChildren> = ({ children }) => {
   React.useEffect(() => {
     const requestUser = async () => {
       try {
-        const user = await getUser();
-        setCurrentUser(user);
+        const data = await getUser();
+
+        console.log(data);
+        setCurrentUser(data || {});
       } catch (error) {
         console.log(error);
       }

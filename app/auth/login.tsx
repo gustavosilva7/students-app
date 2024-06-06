@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -8,7 +8,7 @@ import { useAuth } from "@/app/AuthProvider";
 
 export default function LoginScreen({ navigation }: any) {
   const { api } = useApi();
-  const { setAuthToken } = useAuth();
+  const { token, setAuthToken } = useAuth();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,9 +18,8 @@ export default function LoginScreen({ navigation }: any) {
     onSubmit: async (values) => {
       try {
         const { data } = await api.post("/login", values);
-        setAuthToken(data.token);
         Alert.alert("Sucesso", `Token: ${data.token}`);
-        navigation.navigate("TabLayout"); // Navega para o TabLayout após o login bem-sucedido
+        setAuthToken(data.token);
       } catch (error: any) {
         if (error.response) {
           console.log("Response data:", error.response.data);
