@@ -1,30 +1,32 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { AuthInit, AuthProvider, useAuth } from './AuthProvider';
-import AuthLayout from './auth/_layout';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from './auth/login';
-import RegisterScreen from './auth/register';
-import HomeScreen from './(tabs)';
-import Profile from './(tabs)/profile';
-import SearchView from './(tabs)/search';
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { AuthInit, AuthProvider, useAuth } from "./AuthProvider";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginScreen from "./auth/login";
+import RegisterScreen from "./auth/register";
+import TabLayout from "@/app/(tabs)/_layout"; // Importa o TabLayout
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
   const { currentUser } = useAuth();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-
-  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     if (loaded) {
@@ -38,25 +40,22 @@ export default function RootLayout() {
 
   return (
     <NavigationContainer independent={true}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme} >
-        {currentUser ? (
-          <AuthProvider>
-            <AuthInit>
-              <Stack.Navigator>
-                <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="profile" component={Profile} options={{ headerShown: false }} />
-                <Stack.Screen name="search" component={SearchView} options={{ headerShown: false }} />
-              </Stack.Navigator>
-            </AuthInit>
-          </AuthProvider>
-        ) : (
-          <Stack.Navigator>
-            <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
-          </Stack.Navigator>
-        )}
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <AuthProvider>
+          <AuthInit>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {currentUser ? (
+                <Stack.Screen name="TabLayout" component={TabLayout} /> // Atualizado para TabLayout
+              ) : (
+                <>
+                  <Stack.Screen name="login" component={LoginScreen} />
+                  <Stack.Screen name="register" component={RegisterScreen} />
+                </>
+              )}
+            </Stack.Navigator>
+          </AuthInit>
+        </AuthProvider>
       </ThemeProvider>
     </NavigationContainer>
-
   );
 }
