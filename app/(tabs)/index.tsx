@@ -1,12 +1,14 @@
-import { Image, StyleSheet, Platform, Button } from "react-native";
+import { Image, StyleSheet, Button, Pressable } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link } from "expo-router";
+import { useAuth } from "@/app/AuthProvider";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }: any) {
+  const { currentUser } = useAuth();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -18,14 +20,17 @@ export default function HomeScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Welcome, {currentUser.name}!</ThemedText>
         <HelloWave />
       </ThemedView>
 
       <ThemedView>
-        <Link href="/view">
-          <Button title="Open Modal" />
-        </Link>
+        <Pressable
+          onPress={() => navigation.navigate("modal")}
+          style={{ padding: 16 }}
+        >
+          <ThemedText>Go to modal</ThemedText>
+        </Pressable>
       </ThemedView>
     </ParallaxScrollView>
   );

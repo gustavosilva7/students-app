@@ -15,6 +15,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
 import AuthenticatedLayout from "./(tabs)/authenticatedLayout";
+import ViewScreen from "./modal";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,7 +40,10 @@ function Layout() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {currentUser ? (
-        <Stack.Screen name="tabs" component={AuthenticatedLayout} />
+        <>
+          <Stack.Screen name="tabs" component={AuthenticatedLayout} />
+          <Stack.Screen name="modal" component={ViewScreen} options={{ headerShown: true, title: "Modal", presentation: "modal" }} />
+        </>
       ) : (
         <>
           <Stack.Screen name="login" component={LoginScreen} />

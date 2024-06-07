@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Alert, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useApi } from "@/hooks/useApi";

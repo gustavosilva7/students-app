@@ -7,7 +7,7 @@ export default function ViewScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={{ width: "100%", textAlign: "center" }}>
-        This is a modal view fsfd
+        This is a modal view
       </ThemedText>
     </ThemedView>
   )
