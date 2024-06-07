@@ -1,12 +1,36 @@
 import React from "react";
-import { Link, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useApi } from "@/hooks/useApi";
+import { useAuth } from "../AuthProvider";
+import { useFormik } from "formik";
 
 export default function RegisterScreen({ navigation }: any) {
+  const { api } = useApi();
+  const { setAuthToken } = useAuth();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      name: "",
+      serie: "",
+      class: "",
+      applicationType: 2,
+    },
+    onSubmit: async (values) => {
+      try {
+        const { data } = await api.post("/register", values);
+
+        setAuthToken(data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
   return (
     <>
       <Stack.Screen />
@@ -26,6 +50,9 @@ export default function RegisterScreen({ navigation }: any) {
                 placeholder="Email"
                 style={styles.input}
                 placeholderTextColor="#fff"
+                onChange={(e) =>
+                  formik.setFieldValue("email", e.nativeEvent.text)
+                }
               />
             </ThemedView>
             <ThemedView style={{ gap: 8, backgroundColor: "transparent" }}>
@@ -38,6 +65,9 @@ export default function RegisterScreen({ navigation }: any) {
                 placeholder="Senha"
                 style={styles.input}
                 placeholderTextColor="#fff"
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.nativeEvent.text)
+                }
               />
             </ThemedView>
             <ThemedView style={{ gap: 8, backgroundColor: "transparent" }}>
@@ -50,6 +80,9 @@ export default function RegisterScreen({ navigation }: any) {
                 placeholder="Nome"
                 style={styles.input}
                 placeholderTextColor="#fff"
+                onChange={(e) =>
+                  formik.setFieldValue("name", e.nativeEvent.text)
+                }
               />
             </ThemedView>
             <ThemedView
@@ -72,6 +105,9 @@ export default function RegisterScreen({ navigation }: any) {
                   placeholder="Série"
                   style={styles.input}
                   placeholderTextColor="#fff"
+                  onChange={(e) =>
+                    formik.setFieldValue("serie", e.nativeEvent.text)
+                  }
                 />
               </ThemedView>
               <ThemedView
@@ -86,6 +122,9 @@ export default function RegisterScreen({ navigation }: any) {
                   placeholder="Turma"
                   style={styles.input}
                   placeholderTextColor="#fff"
+                  onChange={(e) =>
+                    formik.setFieldValue("class", e.nativeEvent.text)
+                  }
                 />
               </ThemedView>
             </ThemedView>

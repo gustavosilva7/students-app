@@ -8,7 +8,7 @@ import { useAuth } from "@/app/AuthProvider";
 
 export default function LoginScreen({ navigation }: any) {
   const { api } = useApi();
-  const { token, setAuthToken } = useAuth();
+  const { setAuthToken } = useAuth();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,19 +18,10 @@ export default function LoginScreen({ navigation }: any) {
     onSubmit: async (values) => {
       try {
         const { data } = await api.post("/login", values);
-        Alert.alert("Sucesso", `Token: ${data.token}`);
+
         setAuthToken(data.token);
-      } catch (error: any) {
-        if (error.response) {
-          console.log("Response data:", error.response.data);
-          console.log("Response status:", error.response.status);
-          console.log("Response headers:", error.response.headers);
-        } else if (error.request) {
-          console.log("Request data:", error.request);
-        } else {
-          console.log("Error message:", error.message);
-        }
-        console.log("Config:", error.config);
+      } catch (error) {
+        console.log(error);
       }
     },
   });
