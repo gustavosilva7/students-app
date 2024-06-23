@@ -1,17 +1,36 @@
 import React from "react";
-
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SearchView from "./search";
 import Profile from "./profile";
 import HomeScreen from ".";
+import Book from "./book";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function AuthenticatedLayout() {
   const colorScheme = useColorScheme();
 
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Main"
+        component={MainTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="book"
+        component={Book}
+        options={{ presentation: "modal" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
