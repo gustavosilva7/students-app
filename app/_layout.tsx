@@ -1,22 +1,30 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { AuthInit, AuthProvider, useAuth } from './AuthProvider';
-import Login from './login';
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { AuthInit, AuthProvider, useAuth } from "./AuthProvider";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginScreen from "./auth/login";
+import RegisterScreen from "./auth/register";
+import AuthenticatedLayout from "./(tabs)/authenticatedLayout";
+import ViewScreen from "./modal";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createNativeStackNavigator();
 
 function Layout() {
   const { currentUser } = useAuth();
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -29,35 +37,35 @@ function Layout() {
     return null;
   }
 
-  if (!currentUser) {
-    return (
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-          <Stack.Screen name="register" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    );
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="view" options={{ headerShown: true, title: "Editar Perfil", presentation: "modal" }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {currentUser ? (
+        <>
+          <Stack.Screen name="tabs" component={AuthenticatedLayout} />
+          <Stack.Screen name="modal" component={ViewScreen} options={{ headerShown: true, title: "Modal", presentation: "modal" }} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="login" component={LoginScreen} />
+          <Stack.Screen name="register" component={RegisterScreen} />
+        </>
+      )}
+    </Stack.Navigator>
   )
 }
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
 
   return (
-    <AuthProvider>
-      <AuthInit>
-        <Layout />
-      </AuthInit>
-    </AuthProvider>
+    <NavigationContainer independent={true}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <AuthProvider>
+          <AuthInit>
+            <Layout />
+          </AuthInit>
+        </AuthProvider>
+      </ThemeProvider>
+    </NavigationContainer>
   );
 }
