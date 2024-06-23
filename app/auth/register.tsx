@@ -1,7 +1,13 @@
 import React from "react";
 import { Stack } from "expo-router";
 
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -12,6 +18,8 @@ import { useFormik } from "formik";
 export default function RegisterScreen({ navigation }: any) {
   const { api } = useApi();
   const { setAuthToken } = useAuth();
+  const { height } = useWindowDimensions();
+  const containerHeight = { minHeight: height };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -32,9 +40,8 @@ export default function RegisterScreen({ navigation }: any) {
     },
   });
   return (
-    <>
-      <Stack.Screen />
-      <ThemedView style={styles.container}>
+    <ScrollView keyboardShouldPersistTaps="handled" style={{ flex: 1 }}>
+      <ThemedView style={[styles.container, containerHeight]}>
         <ThemedView style={styles.form}>
           <ThemedView style={styles.formHeader}>
             <ThemedText style={styles.title}>Cadastrar</ThemedText>
@@ -177,7 +184,7 @@ export default function RegisterScreen({ navigation }: any) {
           </ThemedView>
         </ThemedView>
       </ThemedView>
-    </>
+    </ScrollView>
   );
 }
 

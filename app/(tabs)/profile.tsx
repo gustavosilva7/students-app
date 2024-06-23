@@ -1,7 +1,25 @@
-import { StyleSheet, Image, Platform } from "react-native";
+import { StyleSheet, Image, Platform, Button } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedView } from "@/components/ThemedView";
+import { useApi } from "@/hooks/useApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../AuthProvider";
 
-export default function Profile() {
+export default function Profile({ navigation }: any) {
+  const { api } = useApi();
+  const { setCurrentUser } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout");
+      AsyncStorage.removeItem("token");
+      AsyncStorage.removeItem("user");
+
+      setCurrentUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -11,7 +29,11 @@ export default function Profile() {
           style={styles.reactLogo}
         />
       }
-    ></ParallaxScrollView>
+    >
+      <ThemedView>
+        <Button title="Sair" onPress={handleLogout} />
+      </ThemedView>
+    </ParallaxScrollView>
   );
 }
 

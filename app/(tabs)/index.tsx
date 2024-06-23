@@ -73,7 +73,6 @@ export default function HomeScreen({ navigation }: any) {
           Lista de próximos a serem lidos
         </ThemedText>
         <List books={myWishList} navigation={navigation} />
-
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -81,7 +80,6 @@ export default function HomeScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
   titleContainer: {
-
     flexDirection: "column",
     gap: 8,
   },
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
     width: 370,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
   listsContainer: {
     flexDirection: "column",

@@ -35,7 +35,11 @@ export default function List({
     try {
       const { data } = await api.get("books/student/book-in-lending");
 
-      setBookInLending(data);
+      if (data.id) {
+        setBookInLending(data);
+      } else {
+        setBookInLending(null);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -78,9 +82,7 @@ export default function List({
                   backgroundColor: "transparent",
                 }}
               >
-                <ThemedText style={styles.text}>
-                  {book.title.split(" ", 1)}
-                </ThemedText>
+                <ThemedText style={styles.text}>{book.title}</ThemedText>
                 <CircleBadge active={book.active} />
               </ThemedView>
               {lending && book.id === bookInLending?.id && (

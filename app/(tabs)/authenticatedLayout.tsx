@@ -24,7 +24,7 @@ export default function AuthenticatedLayout() {
       <Stack.Screen
         name="book"
         component={Book}
-        options={{ presentation: "modal" }}
+        options={{ presentation: "modal", title: "Detalhes do livro" }}
       />
     </Stack.Navigator>
   );

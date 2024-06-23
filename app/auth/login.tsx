@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useApi } from "@/hooks/useApi";
@@ -9,6 +15,8 @@ import { useAuth } from "@/app/AuthProvider";
 export default function LoginScreen({ navigation }: any) {
   const { api } = useApi();
   const { setAuthToken } = useAuth();
+  const { height } = useWindowDimensions();
+  const containerHeight = { minHeight: height };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,93 +35,95 @@ export default function LoginScreen({ navigation }: any) {
   });
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.form}>
-        <ThemedView style={styles.formHeader}>
-          <ThemedText style={styles.title}>Login</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.formData}>
-          <ThemedView style={{ gap: 10, backgroundColor: "transparent" }}>
-            <ThemedText
-              style={{ fontSize: 22, fontWeight: "800", color: "#000" }}
-            >
-              Email
-            </ThemedText>
-            <TextInput
-              placeholder="Email"
-              onChange={(e) =>
-                formik.setFieldValue("email", e.nativeEvent.text)
-              }
-              style={styles.input}
-              placeholderTextColor="#fff"
-            />
+    <ScrollView style={{ flex: 1 }}>
+      <ThemedView style={[styles.container, containerHeight]}>
+        <ThemedView style={styles.form}>
+          <ThemedView style={styles.formHeader}>
+            <ThemedText style={styles.title}>Login</ThemedText>
           </ThemedView>
-          <ThemedView style={{ gap: 10, backgroundColor: "transparent" }}>
-            <ThemedText
-              style={{ fontSize: 22, fontWeight: "800", color: "#000" }}
-            >
-              Senha
-            </ThemedText>
-            <TextInput
-              placeholder="Senha"
-              style={styles.input}
-              onChange={(e) =>
-                formik.setFieldValue("password", e.nativeEvent.text)
-              }
-              placeholderTextColor="#fff"
-              secureTextEntry
-            />
+          <ThemedView style={styles.formData}>
+            <ThemedView style={{ gap: 10, backgroundColor: "transparent" }}>
+              <ThemedText
+                style={{ fontSize: 22, fontWeight: "800", color: "#000" }}
+              >
+                Email
+              </ThemedText>
+              <TextInput
+                placeholder="Email"
+                onChange={(e) =>
+                  formik.setFieldValue("email", e.nativeEvent.text)
+                }
+                style={styles.input}
+                placeholderTextColor="#fff"
+              />
+            </ThemedView>
+            <ThemedView style={{ gap: 10, backgroundColor: "transparent" }}>
+              <ThemedText
+                style={{ fontSize: 22, fontWeight: "800", color: "#000" }}
+              >
+                Senha
+              </ThemedText>
+              <TextInput
+                placeholder="Senha"
+                style={styles.input}
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.nativeEvent.text)
+                }
+                placeholderTextColor="#fff"
+                secureTextEntry
+              />
+            </ThemedView>
           </ThemedView>
-        </ThemedView>
-        <ThemedView
-          style={{
-            height: "25%",
-            backgroundColor: "transparent",
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        >
-          <TouchableOpacity
+          <ThemedView
             style={{
-              backgroundColor: "#2c2c2c",
-              paddingVertical: 15,
-              paddingHorizontal: 30,
-              borderRadius: 10,
-              alignItems: "center",
-            }}
-            onPress={() => formik.handleSubmit()}
-          >
-            <ThemedText
-              style={{ color: "white", fontSize: 20, fontWeight: "800" }}
-            >
-              Login
-            </ThemedText>
-          </TouchableOpacity>
-          <ThemedText
-            style={{
-              color: "#000",
-              fontSize: 18,
-              fontWeight: "800",
-              textAlign: "center",
-              marginTop: 10,
+              height: "25%",
+              backgroundColor: "transparent",
+              justifyContent: "center",
+              alignSelf: "center",
             }}
           >
-            Não tem uma conta?
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#2c2c2c",
+                paddingVertical: 15,
+                paddingHorizontal: 30,
+                borderRadius: 10,
+                alignItems: "center",
+              }}
+              onPress={() => formik.handleSubmit()}
+            >
+              <ThemedText
+                style={{ color: "white", fontSize: 20, fontWeight: "800" }}
+              >
+                Login
+              </ThemedText>
+            </TouchableOpacity>
             <ThemedText
               style={{
-                color: "#2c2c2c",
+                color: "#000",
                 fontSize: 18,
                 fontWeight: "800",
-                textDecorationLine: "underline",
+                textAlign: "center",
+                marginTop: 10,
               }}
-              onPress={() => navigation.navigate("register")}
             >
-              Cadastre-se
+              Não tem uma conta?
+              <ThemedText
+                style={{
+                  color: "#2c2c2c",
+                  fontSize: 18,
+                  fontWeight: "800",
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => navigation.navigate("register")}
+              >
+                Cadastre-se
+              </ThemedText>
             </ThemedText>
-          </ThemedText>
+          </ThemedView>
         </ThemedView>
       </ThemedView>
-    </ThemedView>
+    </ScrollView>
   );
 }
 
@@ -122,13 +132,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
     height: "100%",
     width: "100%",
+    padding: 20,
   },
   form: {
     width: "100%",
-    height: "55%",
+    height: 400,
     backgroundColor: "white",
     borderRadius: 30,
   },
