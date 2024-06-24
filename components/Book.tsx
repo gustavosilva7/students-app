@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { Pressable, Image, View, Text } from "react-native";
+import React from "react";
+import { Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import ImageComponent from "@/components/Image";
 import { ThemedView } from "./ThemedView";
@@ -20,21 +20,21 @@ export function BookItem({ item, navigation }: any) {
         navigation.navigate("book", { id: item.id });
       }}
     >
-      <ThemedView>
-        <ImageComponent source={item.image} />
+      <ThemedView style={{ backgroundColor: "transparent" }}>
+        <ImageComponent
+          source={item.image}
+          style={{ height: 150, width: 150 }}
+        />
       </ThemedView>
-      <ThemedView>
-        <ThemedView
-          style={{
-            flexDirection: "row",
-            gap: 8,
-            alignItems: "center",
-            backgroundColor: "transparent",
-          }}
-        >
-          <ThemedText>{item.title}</ThemedText>
-        </ThemedView>
-      </ThemedView>
+      <ThemedText
+        style={{
+          fontSize: 26,
+          fontWeight: "bold",
+          color: "black",
+        }}
+      >
+        {item.title}
+      </ThemedText>
     </Pressable>
   );
 }

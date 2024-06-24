@@ -4,6 +4,7 @@ import SearchView from "./search";
 import Profile from "./profile";
 import HomeScreen from ".";
 import Book from "./book";
+import MoreBooks from "./moreBooks";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -25,6 +26,11 @@ export default function AuthenticatedLayout() {
         name="book"
         component={Book}
         options={{ presentation: "modal", title: "Detalhes do livro" }}
+      />
+      <Stack.Screen
+        name="more-books"
+        component={MoreBooks}
+        options={{ presentation: "modal", title: "Mais informações" }}
       />
     </Stack.Navigator>
   );

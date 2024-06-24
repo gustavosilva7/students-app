@@ -5,15 +5,23 @@ import { MaterialIcons } from "@expo/vector-icons";
 type Props = {
   children?: React.ReactNode;
   route?: string;
+  navigation: any;
 } & React.ComponentProps<typeof Pressable>;
 
-export default function ButtonList({ children, route, ...props }: Props) {
+export default function ButtonList({
+  children,
+  route,
+  navigation,
+  ...props
+}: Props) {
   return (
     <Pressable
       {...props}
       style={styles.container}
       onPress={() => {
-        console.log("ButtonList pressed");
+        navigation.navigate("more-books", {
+          routeName: route,
+        });
       }}
     >
       {!children && (

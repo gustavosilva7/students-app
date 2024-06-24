@@ -10,12 +10,14 @@ import { useApi } from "@/hooks/useApi";
 type Props = {
   books: Books[];
   lending?: boolean;
+  route: string;
   navigation: any;
 };
 
 export default function List({
   lending,
   books: initialBooks,
+  route,
   navigation,
 }: Props) {
   const { api } = useApi();
@@ -108,7 +110,7 @@ export default function List({
           </Pressable>
         ))}
       </ThemedView>
-      {books.length > 2 && <ButtonList />}
+      {books.length > 2 && <ButtonList route={route} navigation={navigation} />}
     </ThemedView>
   );
 }

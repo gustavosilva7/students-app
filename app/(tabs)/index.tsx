@@ -60,7 +60,7 @@ export default function HomeScreen({ navigation }: any) {
         >
           Livros que já li
         </ThemedText>
-        <List books={myBooks} lending navigation={navigation} />
+        <List books={myBooks} lending route="/" navigation={navigation} />
       </ThemedView>
       <ThemedView style={styles.listsContainer}>
         <ThemedText
@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }: any) {
         >
           Lista de próximos a serem lidos
         </ThemedText>
-        <List books={myWishList} navigation={navigation} />
+        <List books={myWishList} route="/" navigation={navigation} />
       </ThemedView>
     </ParallaxScrollView>
   );
