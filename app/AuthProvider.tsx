@@ -5,8 +5,8 @@ import React from "react";
 type Auth = {
   token: string;
   setAuthToken: (token: string) => void;
-  currentUser?: any;
-  setCurrentUser: (user: any) => void;
+  currentUser?: User | null;
+  setCurrentUser: (user: User | null) => void;
 };
 
 const initialValues: Auth = {

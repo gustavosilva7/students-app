@@ -14,6 +14,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useApi } from "@/hooks/useApi";
 import { useAuth } from "../AuthProvider";
 import { useFormik } from "formik";
+import { Picker } from "@react-native-picker/picker";
 
 export default function RegisterScreen({ navigation }: any) {
   const { api } = useApi();
@@ -108,14 +109,19 @@ export default function RegisterScreen({ navigation }: any) {
                 >
                   Série
                 </ThemedText>
-                <TextInput
-                  placeholder="Série"
-                  style={styles.input}
-                  placeholderTextColor="#fff"
-                  onChange={(e) =>
-                    formik.setFieldValue("serie", e.nativeEvent.text)
-                  }
-                />
+                <ThemedView style={styles.picker}>
+                  <Picker
+                    style={{ color: "#fff" }}
+                    selectedValue={formik.values.serie}
+                    onValueChange={(itemValue) =>
+                      formik.setFieldValue("serie", itemValue)
+                    }
+                  >
+                    <Picker.Item label="1º ano" value={1} />
+                    <Picker.Item label="2º ano" value={2} />
+                    <Picker.Item label="3º ano" value={3} />
+                  </Picker>
+                </ThemedView>
               </ThemedView>
               <ThemedView
                 style={{ width: "48.5%", backgroundColor: "transparent" }}
@@ -125,14 +131,21 @@ export default function RegisterScreen({ navigation }: any) {
                 >
                   Turma
                 </ThemedText>
-                <TextInput
-                  placeholder="Turma"
-                  style={styles.input}
-                  placeholderTextColor="#fff"
-                  onChange={(e) =>
-                    formik.setFieldValue("class", e.nativeEvent.text)
-                  }
-                />
+                <ThemedView style={styles.picker}>
+                  <Picker
+                    style={{ color: "#fff" }}
+                    selectedValue={formik.values.class}
+                    onValueChange={(itemValue) =>
+                      formik.setFieldValue("class", itemValue)
+                    }
+                  >
+                    <Picker.Item label="Infórmatica" value={1} />
+                    <Picker.Item label="Segurança do trabalho" value={2} />
+                    <Picker.Item label="Agronegócio" value={3} />
+                    <Picker.Item label="Finanças" value={4} />
+                    <Picker.Item label="Enfermagem" value={5} />
+                  </Picker>
+                </ThemedView>
               </ThemedView>
             </ThemedView>
           </ThemedView>
@@ -152,6 +165,7 @@ export default function RegisterScreen({ navigation }: any) {
                 borderRadius: 10,
                 alignItems: "center",
               }}
+              onPress={() => formik.handleSubmit()}
             >
               <ThemedText
                 style={{ color: "white", fontSize: 20, fontWeight: "800" }}
@@ -226,6 +240,12 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
+    backgroundColor: "#2c2c2c",
+    borderRadius: 10,
+    color: "#fff",
+    borderWidth: 1,
+  },
+  picker: {
     backgroundColor: "#2c2c2c",
     borderRadius: 10,
     color: "#fff",

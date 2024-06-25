@@ -1,7 +1,9 @@
+import { useAuth } from "@/app/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const useApi = () => {
+  const { setCurrentUser } = useAuth();
   const api = axios.create({
     baseURL: process.env.EXPO_PUBLIC_API_URL,
   });
@@ -13,6 +15,19 @@ const useApi = () => {
     }
     return config;
   });
+
+  api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      if (error.response.status === 401) {
+        await AsyncStorage.removeItem("token");
+        await AsyncStorage.removeItem("user");
+
+        setCurrentUser(null);
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const getUser = async () => {
     try {

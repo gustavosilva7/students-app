@@ -155,22 +155,22 @@ export default function Book({ route, navigation }: any) {
   return (
     <ScrollView style={styles.container}>
       <ThemedView style={styles.imageContainer}>
-        <ImageComponent source={book.image} style={styles.image} />
+        <ImageComponent source={book?.image} style={styles.image} />
       </ThemedView>
 
       <ThemedView style={styles.mainInfoContainer}>
-        <ThemedText style={styles.bookTitle}>{book.title}</ThemedText>
+        <ThemedText style={styles.bookTitle}>{book?.title}</ThemedText>
 
         <ThemedView style={styles.info}>
           <ThemedText style={styles.text}>Status:</ThemedText>
-          <Badge active={book.active} />
+          <Badge active={book?.active} />
         </ThemedView>
 
         {readBook && (
           <ThemedView style={styles.info}>
             <ThemedText style={styles.text}>Sua avaliação: </ThemedText>
             <Rating
-              initialRating={book.stars[0].avaliation}
+              initialRating={book?.stars[0]?.avaliation}
               size={28}
               onRatingChange={(event) => {
                 avaliableBook(event);
@@ -183,13 +183,15 @@ export default function Book({ route, navigation }: any) {
       <ThemedView style={styles.infoContainer}>
         <ThemedText style={styles.titleDetails}>Informações</ThemedText>
         <ThemedView style={styles.infos}>
-          <ThemedText style={styles.infosText}>Autor: {book.author}</ThemedText>
           <ThemedText style={styles.infosText}>
-            Editora: {book.publisher}
+            Autor: {book?.author}
           </ThemedText>
-          <ThemedText style={styles.infosText}>Ano: {book.year}</ThemedText>
           <ThemedText style={styles.infosText}>
-            Edição: {book.edition}
+            Editora: {book?.publisher}
+          </ThemedText>
+          <ThemedText style={styles.infosText}>Ano: {book?.year}</ThemedText>
+          <ThemedText style={styles.infosText}>
+            Edição: {book?.edition}
             {"º"}
           </ThemedText>
         </ThemedView>

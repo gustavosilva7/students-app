@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }: any) {
     try {
       const { data } = await api.get("/students/books-reads");
 
-      setMyBooks(data);
+      setMyBooks(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation }: any) {
     try {
       const { data } = await api.get("/wish-list");
 
-      setMyWishList(data);
+      setMyWishList(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +60,12 @@ export default function HomeScreen({ navigation }: any) {
         >
           Livros que já li
         </ThemedText>
-        <List books={myBooks} lending route="/" navigation={navigation} />
+        <List
+          books={myBooks}
+          lending
+          route="/students/books-reads"
+          navigation={navigation}
+        />
       </ThemedView>
       <ThemedView style={styles.listsContainer}>
         <ThemedText
@@ -72,7 +77,7 @@ export default function HomeScreen({ navigation }: any) {
         >
           Lista de próximos a serem lidos
         </ThemedText>
-        <List books={myWishList} route="/" navigation={navigation} />
+        <List books={myWishList} route="/wish-list" navigation={navigation} />
       </ThemedView>
     </ParallaxScrollView>
   );
