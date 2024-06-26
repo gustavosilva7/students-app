@@ -4,10 +4,12 @@ import SearchView from "./search";
 import Profile from "./profile";
 import HomeScreen from ".";
 import Book from "./book";
+import UserEdit from "./userEdit";
 import MoreBooks from "./moreBooks";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Avatar from "@/components/Avatar";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,6 +34,11 @@ export default function AuthenticatedLayout() {
         component={MoreBooks}
         options={{ presentation: "modal", title: "Mais informações" }}
       />
+      <Stack.Screen
+        name="user-edit"
+        component={UserEdit}
+        options={{ presentation: "modal", title: "Editar perfil" }}
+      />
     </Stack.Navigator>
   );
 }
@@ -47,8 +54,6 @@ function MainTabs() {
                 return focused ? "home" : "home-outline";
               case "search":
                 return focused ? "search" : "search-outline";
-              case "profile":
-                return focused ? "person" : "person-outline";
               default:
                 return "home";
             }
@@ -82,6 +87,7 @@ function MainTabs() {
         name="profile"
         component={Profile}
         options={{
+          tabBarIcon: () => <Avatar />,
           headerShown: false,
           tabBarLabelStyle: {
             display: "none",
