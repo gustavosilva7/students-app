@@ -68,7 +68,14 @@ export default function List({
   return (
     <ThemedView style={styles.container}>
       {books.length === 0 ? (
-        <ThemedText style={{ color: "#fff", fontSize: 28, fontWeight: "bold" }}>
+        <ThemedText
+          style={{
+            color: "#fff",
+            fontSize: 28,
+            fontWeight: "bold",
+            padding: 12,
+          }}
+        >
           Nenhum livro encotrado
         </ThemedText>
       ) : (
