@@ -3,7 +3,7 @@ import axios from "axios";
 
 const useApi = () => {
   const api = axios.create({
-    baseURL: process.env.EXPO_PUBLIC_API_URL,
+    baseURL: "https://bibliotech-server.vercel.app/api/api",
   });
 
   api.interceptors.request.use(async (config) => {

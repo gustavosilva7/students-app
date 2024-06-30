@@ -55,7 +55,11 @@ export default function List({
 
   useEffect(() => {
     if (lending && bookInLending) {
-      setBooks([bookInLending, ...initialBooks]);
+      if (initialBooks.length > 0) {
+        setBooks([bookInLending, ...initialBooks]);
+      } else {
+        setBooks([bookInLending]);
+      }
     } else {
       setBooks(initialBooks);
     }
@@ -63,54 +67,64 @@ export default function List({
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={[styles.listContainer, listWidth]}>
-        {books.slice(0, 2).map((book) => (
-          <Pressable
-            key={book.id}
-            style={styles.stepContainer}
-            onPress={() => {
-              navigation.navigate("book", { id: book.id });
-            }}
-          >
-            <ThemedView style={styles.viewImage}>
-              <ImageComponent source={book.image} />
-            </ThemedView>
-            <ThemedView style={styles.viewInfors}>
-              <ThemedView
-                style={{
-                  flexDirection: "row",
-                  gap: 8,
-                  alignItems: "center",
-                  backgroundColor: "transparent",
+      {books.length === 0 ? (
+        <ThemedText style={{ color: "#fff", fontSize: 28, fontWeight: "bold" }}>
+          Nenhum livro encotrado
+        </ThemedText>
+      ) : (
+        <>
+          <ThemedView style={[styles.listContainer, listWidth]}>
+            {books.slice(0, 2).map((book) => (
+              <Pressable
+                key={book.id}
+                style={styles.stepContainer}
+                onPress={() => {
+                  navigation.navigate("book", { id: book.id });
                 }}
               >
-                <ThemedText style={styles.text}>{book.title}</ThemedText>
-                <CircleBadge active={book.active} />
-              </ThemedView>
-              {lending && book.id === bookInLending?.id && (
-                <ThemedView
-                  style={{
-                    width: "100%",
-                    borderRadius: 15,
-                    backgroundColor: "#ffc107",
-                  }}
-                >
-                  <ThemedText
+                <ThemedView style={styles.viewImage}>
+                  <ImageComponent source={book.image} />
+                </ThemedView>
+                <ThemedView style={styles.viewInfors}>
+                  <ThemedView
                     style={{
-                      color: "#fff",
-                      fontWeight: 600,
-                      textAlign: "center",
+                      flexDirection: "row",
+                      gap: 8,
+                      alignItems: "center",
+                      backgroundColor: "transparent",
                     }}
                   >
-                    Você está lendo
-                  </ThemedText>
+                    <ThemedText style={styles.text}>{book.title}</ThemedText>
+                    <CircleBadge active={book.active} />
+                  </ThemedView>
+                  {lending && book.id === bookInLending?.id && (
+                    <ThemedView
+                      style={{
+                        width: "100%",
+                        borderRadius: 15,
+                        backgroundColor: "#ffc107",
+                      }}
+                    >
+                      <ThemedText
+                        style={{
+                          color: "#fff",
+                          fontWeight: 600,
+                          textAlign: "center",
+                        }}
+                      >
+                        Você está lendo
+                      </ThemedText>
+                    </ThemedView>
+                  )}
                 </ThemedView>
-              )}
-            </ThemedView>
-          </Pressable>
-        ))}
-      </ThemedView>
-      {books.length > 2 && <ButtonList route={route} navigation={navigation} />}
+              </Pressable>
+            ))}
+          </ThemedView>
+          {books.length > 2 && (
+            <ButtonList route={route} navigation={navigation} />
+          )}
+        </>
+      )}
     </ThemedView>
   );
 }
@@ -124,6 +138,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 260,
     alignItems: "center",
+    justifyContent: "center",
   },
   listContainer: {
     backgroundColor: "transparent",

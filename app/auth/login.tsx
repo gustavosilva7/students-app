@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -17,6 +17,7 @@ export default function LoginScreen({ navigation }: any) {
   const { setAuthToken } = useAuth();
   const { height } = useWindowDimensions();
   const containerHeight = { minHeight: height };
+  const [isLoaded, setIsLoaded] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,12 +25,15 @@ export default function LoginScreen({ navigation }: any) {
       applicationType: 2,
     },
     onSubmit: async (values) => {
+      setIsLoaded(true);
       try {
         const { data } = await api.post("/login", values);
 
         setAuthToken(data.token);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoaded(false);
       }
     },
   });
@@ -95,7 +99,7 @@ export default function LoginScreen({ navigation }: any) {
               <ThemedText
                 style={{ color: "white", fontSize: 20, fontWeight: "800" }}
               >
-                Login
+                {isLoaded ? "Carregando..." : "Entrar"}
               </ThemedText>
             </TouchableOpacity>
             <ThemedText

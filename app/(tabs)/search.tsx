@@ -147,7 +147,7 @@ export default function SearchView({ navigation }: any) {
               />
             </ThemedView>
             <ThemedView>
-              <ThemedText>Recomendados</ThemedText>
+              <ThemedText>Todos</ThemedText>
               <List books={books} navigation={navigation} route="/books" />
             </ThemedView>
           </ScrollView>
