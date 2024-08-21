@@ -13,7 +13,8 @@
       "backgroundColor": "#242529"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gustax07.bibliotech"
     },
     "android": {
       "adaptiveIcon": {
