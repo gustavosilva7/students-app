@@ -5,7 +5,10 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.185:9898/api"
+      }
     },
     "preview": {
       "distribution": "internal",
@@ -13,7 +16,11 @@
         "buildType": "apk"
       }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://bibliotech-server.vercel.app/api/api"
+      }
+    }
   },
   "submit": {
     "production": {}

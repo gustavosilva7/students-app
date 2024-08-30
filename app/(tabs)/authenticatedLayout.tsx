@@ -32,7 +32,7 @@ export default function AuthenticatedLayout() {
       <Stack.Screen
         name="more-books"
         component={MoreBooks}
-        options={{ presentation: "modal", title: "Mais informações" }}
+        options={{ presentation: "modal", title: "Todos os livros" }}
       />
       <Stack.Screen
         name="user-edit"

@@ -49,5 +49,6 @@ export default function MoreBooks({ route, navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 10,
   },
 });
